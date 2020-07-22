@@ -1,7 +1,6 @@
 <template>
   <div class="pr-TableController">
-    <!--<span>mockId: {{ mockId }}</span>-->
-    <!--<TableFilter />-->
+    <TableFilter :shopList="shopList"/>
     <Table class="pr-TableController__table"
            :items="filteredItems"
            :columns="columns"
@@ -11,13 +10,13 @@
 </template>
 
 <script>
-//import TableFilter from "./TableFilter";
+import TableFilter from "./TableFilter";
 import Table from "./Table";
 import axios from 'axios'
 
 export default {
   name: 'TableController',
-  components: {Table/*, TableFilter*/},
+  components: {Table, TableFilter},
   props: {
     mockId: String
   },
@@ -25,7 +24,44 @@ export default {
     return {
       status: '',
       items: [],
-      columns: []
+      columns: [],
+      columnDict: {
+        age: {
+          name: 'Возраст'
+        },
+        answer_code: {
+          name: 'Код ответа'
+        },
+        author: {
+          name: 'Автор'
+        },
+        location: {
+          name: 'Магазин'
+        },
+        payment_date: {
+          name: 'Дата платежа',
+          sortable: true,
+          width: '150px'
+        },
+        request: {
+          name: 'Заявка'
+        },
+        service: {
+          name: 'Сервисы'
+        },
+        service_message: {
+          name: 'Сообщение сервиса'
+        },
+        slot_date: {
+          name: 'Дата слота'
+        },
+        title: {
+          name: 'Название'
+        },
+      },
+      shopList: [
+        'Химки', 'Тёплый стан'
+      ]
     }
   },
   computed: {
@@ -55,23 +91,39 @@ export default {
           this.status = 'ok';
 
           // исходим из того, что колонок не знаем и получаем их из данных
-          let newColumns = [];
+          let newColumnIds = [];
           for (var i = 0, len = this.items.length; i < len; i++ ) {
             let item = this.items[i];
             let fields = Object.keys(item);
 
             // собираем уникальные поля для всех элементов
-            newColumns = newColumns.concat(fields.filter((item) => newColumns.indexOf(item) < 0));
+            newColumnIds = newColumnIds.concat(fields.filter((item) => newColumnIds.indexOf(item) < 0));
           }
-          console.log('3', newColumns);
+          // готовим колонки с параметрами из словаря
+          let newColumns = [];
+          for (i = 0, len = newColumnIds.length; i < len; i++ ) {
+            let columnId = newColumnIds[i];
+            let column;
+            if (this.columnDict[columnId]) {
+              // идентификатор колонки есть в словаре
+              column = Object.assign({}, this.columnDict[columnId]);
+            } else {
+              // не известная колонка
+              column = {
+                name: columnId.toUpperCase()
+              }
+            }
+            column.id = columnId;
+            column.width = column.width || '' + 100 / newColumnIds.length + '%';
+            newColumns.push(column);
+          }
           this.columns = newColumns;
         })
-        .catch(error => {
+        .catch((/*error*/) => {
           // clear list
           this.items = [];
           this.columns = [];
           this.status = 'error';
-          console.log('222', error);
         });
     }
   }

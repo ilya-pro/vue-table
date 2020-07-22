@@ -4,14 +4,14 @@
          :style="'grid-template-columns: repeat(' + columns.length + ', ' + 100/columns.length
           +'%); padding-right: ' + scrollPadding + 'px;'">
       <!--TODO :key="column.id"-->
-      <div class="pr-Table__headCell" v-for="column in columns" :key="column" :title="column">
-        {{ column }}
+      <div class="pr-Table__headCell" v-for="column in columns" :key="column.id" :title="column.name">
+        {{ column.name }} <span v-if="column.sortable">S</span> <!--{{column.width}}-->
       </div>
     </div>
     <div ref="items" class="pr-Table__items" :style="'grid-template-columns: repeat(' + columns.length + ', ' + 100/columns.length +'%)'">
       <div class="pr-Table__row" v-for="item in items" :key="item.id">
         <div class="pr-Table__cell" v-for="column in columns" :key="column">
-          {{ item[column] }}
+          {{ item[column.id] }}
         </div>
       </div>
     </div>
@@ -34,19 +34,16 @@ export default {
   watch: {
     items() {
       let itemsContainer = this.$refs['items'];
-      console.log('items change', itemsContainer);
       let self = this;
-      // после обновления верстки, вычисляем ширину скроллбара для отступа в шапке
+      // после обновления верстки элементов, вычисляем ширину скроллбара для отступа в шапке
       Vue.nextTick(function () {
         self.scrollPadding = itemsContainer.offsetWidth - itemsContainer.clientWidth;
-        console.log('nextTick');
       })
-
     }
   },
   data() {
     return {
-      scrollPadding: 5
+      scrollPadding: 0
     }
   }
 }
@@ -74,6 +71,7 @@ export default {
   height: calc(100% - 60px); /* 60px - шапка таблицы */
   overflow-y: auto;
   overflow-x: hidden;
+  color: #444;
 }
 .pr-Table__row {
   display: contents;
@@ -88,11 +86,12 @@ export default {
 .pr-Table__cell {
   padding: 20px 10px;
   border-bottom: 1px solid #ccc;
+  overflow: hidden;
 }
 
 .pr-Table__cell + .pr-Table__cell,
 .pr-Table__headCell + .pr-Table__headCell {
-  border-left: 1px solid #ccc;
+  /*border-left: 1px solid #ccc;*/
 }
 .pr-Table__status {
   position: absolute;
