@@ -23,7 +23,7 @@ body {
   margin: 0;
   height: 100%;
   box-sizing: border-box;
-  padding: 30px 60px;
+  padding: 0 60px 30px;
   background-color: #F4F3F3;
 }
 #app {
