@@ -1,22 +1,23 @@
 <template>
   <div class="pr-TableController">
-    <TableFilter :shopList="shopList"/>
-    <Table class="pr-TableController__table"
-           :items="filteredItems"
-           :columns="columns"
-           :status="status"
+    <TableFilter :filterList="filterList"
+                 v-model="shopSelected"/>
+    <TableSimple class="pr-TableController__table"
+                 :items="filteredItems"
+                 :columns="columns"
+                 :status="status"
     />
   </div>
 </template>
 
 <script>
 import TableFilter from "./TableFilter";
-import Table from "./Table";
+import TableSimple from "./TableSimple";
 import axios from 'axios'
 
 export default {
   name: 'TableController',
-  components: {Table, TableFilter},
+  components: {TableSimple, TableFilter},
   props: {
     mockId: String
   },
@@ -59,15 +60,24 @@ export default {
           name: 'Название'
         },
       },
-      shopList: [
-        'Химки', 'Тёплый стан'
-      ]
+      // ['Химки', 'Тёплый стан']
+      uniqueLocationIds: [],
+      shopSelected: ''
     }
   },
   computed: {
+    // отфильтрованные элементы для вывода в таблицу
     filteredItems() {
-      const filteredItems = this.items;
+      const filteredItems = this.items.filter(item => !this.shopSelected || item.location === this.shopSelected);
       return filteredItems;
+    },
+    filterList() {
+      return [{name: 'Все магазины', value: ''}].concat(this.uniqueLocationIds.map(locationId => {
+        return {
+          name: locationId,
+          value: locationId
+        }
+      }));
     }
   },
   mounted() {
@@ -81,23 +91,31 @@ export default {
   },
   methods: {
     tableQuery() {
-      console.log('1 tableQuery');
       this.status = 'request';
       axios
         .get('../mock/' + this.mockId + '.json')
         .then(response => {
-          console.log('2 that', response.data);
           this.items = response.data;
           this.status = 'ok';
 
           // исходим из того, что колонок не знаем и получаем их из данных
           let newColumnIds = [];
+          let uniqueLocationIds = [];
           for (var i = 0, len = this.items.length; i < len; i++ ) {
             let item = this.items[i];
             let fields = Object.keys(item);
 
             // собираем уникальные поля для всех элементов
             newColumnIds = newColumnIds.concat(fields.filter((item) => newColumnIds.indexOf(item) < 0));
+
+            // собираем уникальные значения location
+            if (Object.prototype.hasOwnProperty.call(item, "location") && uniqueLocationIds.indexOf(item.location) === -1) {
+              uniqueLocationIds.push(item.location)
+            }
+          }
+          this.uniqueLocationIds = uniqueLocationIds;
+          if (this.uniqueLocationIds.indexOf(this.shopSelected) === -1) {
+            this.shopSelected = '';
           }
           // готовим колонки с параметрами из словаря
           let newColumns = [];

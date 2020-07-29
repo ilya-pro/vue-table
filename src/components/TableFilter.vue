@@ -1,9 +1,9 @@
 <template>
-  <div class="pr-Filter">
+  <div class="pr-TableFilter">
     <div>Магазин</div>
-    <select v-model="shopSelected">
-      <option v-for="option in shopList" :key="option" :value="option">
-        {{ option }}
+    <select class="pr-TableFilter__select" v-model="shopSelected">
+      <option v-for="option in filterList" :key="option.value" :value="option.value">
+        {{ option.name }}
       </option>
     </select>
   </div>
@@ -13,18 +13,34 @@
 export default {
   name: 'TableFilter',
   props: {
-    shopList: Array
+    filterList: Array,
+    value: String
   },
+
   data() {
     return {
-      shopSelected: 'all'
+      shopSelected: ''
+    }
+  },
+  watch: {
+    shopSelected: function(value) {
+      console.log('shopSelected', value, this.shopSelected);
+      /* для работы с компонентом снаружи через v-model
+         он должен отправлять событие input и принимать свойство value
+       */
+      this.$emit('input', this.shopSelected);
     }
   }
 }
 </script>
 
 <style>
-.pr-Filter {
+.pr-TableFilter {
   color: #BCBCBC;
+}
+.pr-TableFilter__select {
+  height: 50px;
+  padding: 0 20px;
+  border: 1px solid #ccc;
 }
 </style>

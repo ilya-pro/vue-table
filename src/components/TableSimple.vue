@@ -3,14 +3,13 @@
     <div class="pr-Table__head"
          :style="'grid-template-columns: repeat(' + columns.length + ', ' + 100/columns.length
           +'%); padding-right: ' + scrollPadding + 'px;'">
-      <!--TODO :key="column.id"-->
       <div class="pr-Table__headCell" v-for="column in columns" :key="column.id" :title="column.name">
         {{ column.name }} <span v-if="column.sortable">S</span> <!--{{column.width}}-->
       </div>
     </div>
     <div ref="items" class="pr-Table__items" :style="'grid-template-columns: repeat(' + columns.length + ', ' + 100/columns.length +'%)'">
       <div class="pr-Table__row" v-for="item in items" :key="item.id">
-        <div class="pr-Table__cell" v-for="column in columns" :key="column">
+        <div class="pr-Table__cell" v-for="column in columns" :key="column.id">
           {{ item[column.id] }}
         </div>
       </div>
@@ -25,7 +24,7 @@
 import Vue from 'vue'
 
 export default {
-  name: 'Table',
+  name: 'TableSimple',
   props: {
     status: String,
     items: Array,
