@@ -23,8 +23,7 @@ export default {
     }
   },
   watch: {
-    shopSelected: function(value) {
-      console.log('shopSelected', value, this.shopSelected);
+    shopSelected: function(/*value*/) {
       /* для работы с компонентом снаружи через v-model
          он должен отправлять событие input и принимать свойство value
        */
@@ -37,6 +36,7 @@ export default {
 <style>
 .pr-TableFilter {
   color: #BCBCBC;
+  padding-bottom: 20px;
 }
 .pr-TableFilter__select {
   height: 50px;

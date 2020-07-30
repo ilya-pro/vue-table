@@ -16,7 +16,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.11.10 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 0,
     "service_message": "Платеж отклонен"
@@ -27,7 +27,7 @@
     "service": "Сборка",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.10.22 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 1,
     "service_message": "Платеж отклонен"
@@ -38,7 +38,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.05.10 10:00:35",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 5,
     "service_message": "Успешно"
@@ -60,7 +60,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2020.02.18 14:30:00",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 7,
     "service_message": "Успешно"
@@ -71,7 +71,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.09.10 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 0,
     "service_message": "Успешно"
@@ -82,7 +82,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.08.10 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 0,
     "service_message": "Успешно"
@@ -93,7 +93,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.12.10 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 0,
     "service_message": "Успешно"
@@ -104,7 +104,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.03.10 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 0,
     "service_message": "Успешно"
@@ -115,7 +115,7 @@
     "service": "Планирование в магазине",
     "uuid": "d85492ec-5dbf-783f-8682-517601d4b4b3",
     "request": "6984427",
-    "payment_date": "2019.10.10 21:07:03",
+    "payment_date": "2019.05.10 21:07:03",
     "slot_date": "2019.10.10 21:07:03",
     "answer_code": 0,
     "service_message": "Успешно"
