@@ -4,7 +4,11 @@
          :style="'grid-template-columns: repeat(' + columns.length + ', ' + 100/columns.length
           +'%); padding-right: ' + scrollPadding + 'px;'">
       <div class="pr-Table__headCell" v-for="column in columns" :key="column.id" :title="column.name">
-        {{ column.name }} <span v-if="column.sortable">S</span> <!--{{column.width}}-->
+        {{ column.name }}
+        <i v-if="column.sort"
+           class="pr-Table__headSortIcon"
+           :class="iconClass(column.sort)"
+           v-on:click="columnSort(column)"></i> <!--{{ column.sort }}<i class="fa fa-sort" aria-hidden="true"></i> 2 {{ column.name }} width -->
       </div>
     </div>
     <div ref="items" class="pr-Table__items" :style="'grid-template-columns: repeat(' + columns.length + ', ' + 100/columns.length +'%)'">
@@ -44,25 +48,50 @@ export default {
     return {
       scrollPadding: 0
     }
+  },
+  methods: {
+    columnSort(column) {
+      const nextSortMap = {
+        'unset': 'asc',
+        'asc': 'desc',
+        'desc': 'unset'
+      }
+      this.$emit('column-sort-change', column.id, nextSortMap[column.sort]);
+    },
+    // метод-хелпер для генерации класса иконки
+    iconClass(sortType) {
+      const iconSortMap = {
+        unset: 'fa-sort',
+        asc: 'fa-sort-asc',
+        desc: 'fa-sort-desc'
+      }
+      return `pr-Table__headSortIcon_${sortType}` + ' fa '+ iconSortMap[sortType];
+    }
   }
 }
 </script>
 
 <style>
 .pr-Table {
-  /*display: flex;
-  flex-direction: column;*/
   background-color: white;
   height: 100%;
   position: relative;
 }
 .pr-Table__head {
-  /*display: flex;*/
   display: grid;
   width: 100%;
   box-sizing: border-box;
   color: #B0B0B0;
 }
+.pr-Table__headSortIcon {
+  cursor: pointer;
+  padding: 5px;
+}
+.pr-Table__headSortIcon_asc,
+.pr-Table__headSortIcon_desc {
+  color: #444;
+}
+
 .pr-Table__items {
   display: grid;
   grid-auto-rows: max-content; /* ограничиваем высоту строки контентом */
@@ -77,7 +106,8 @@ export default {
   flex-grow: 0;
 }
 .pr-Table__headCell {
-  padding: 20px 10px;
+  padding: 0 10px;
+  line-height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
   border-bottom: 1px solid #ccc;
